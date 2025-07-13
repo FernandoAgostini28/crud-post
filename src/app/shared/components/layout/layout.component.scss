@@ -1,0 +1,20 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app-header {
+  flex-shrink: 0;
+}
+
+.app-main-content {
+  flex-grow: 1;
+  overflow: auto;
+  padding: 24px;
+}
