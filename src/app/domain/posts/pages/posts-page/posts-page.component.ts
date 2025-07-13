@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss',
 })
-export class PostsPageComponent {}
+export class PostsPageComponent {
+  title = 'Posts';
+  constructor() {}
+}

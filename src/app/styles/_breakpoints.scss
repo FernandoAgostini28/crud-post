@@ -1,0 +1,46 @@
+// Baseado nos breakpoints do Angular Material
+// https://material.angular.io/cdk/layout/overview#breakpoints
+$xsmall: 599.98px;
+$small: 959.98px;
+$medium: 1279.98px;
+$large: 1919.98px;
+
+@mixin media-breakpoint-down($size) {
+  @if $size == xs {
+    @media (max-width: $xsmall) {
+      @content;
+    }
+  } @else if $size == sm {
+    @media (max-width: $small) {
+      @content;
+    }
+  } @else if $size == md {
+    @media (max-width: $medium) {
+      @content;
+    }
+  } @else if $size == lg {
+    @media (max-width: $large) {
+      @content;
+    }
+  }
+}
+
+@mixin media-breakpoint-up($size) {
+  @if $size == sm {
+    @media (min-width: ($xsmall + 0.02px)) {
+      @content;
+    }
+  } @else if $size == md {
+    @media (min-width: ($small + 0.02px)) {
+      @content;
+    }
+  } @else if $size == lg {
+    @media (min-width: ($medium + 0.02px)) {
+      @content;
+    }
+  } @else if $size == xl {
+    @media (min-width: ($large + 0.02px)) {
+      @content;
+    }
+  }
+}
