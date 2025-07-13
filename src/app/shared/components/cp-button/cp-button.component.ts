@@ -3,13 +3,17 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
 
 @Component({
-  selector: 'app-card-button',
+  selector: 'app-cp-button',
   standalone: true,
   imports: [CommonModule, MaterialModule],
-  templateUrl: './card-button.component.html',
-  styleUrls: ['./card-button.component.scss'],
+  template: `
+    <button mat-button (click)="action.emit()">
+      <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+      <span>{{ text }}</span>
+    </button>
+  `,
 })
-export class CardButtonComponent {
+export class CpButtonComponent {
   @Input() icon?: string;
   @Input() text = '';
 
