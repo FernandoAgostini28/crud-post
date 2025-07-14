@@ -6,20 +6,19 @@ import { MaterialModule } from '../../material/material.module';
   selector: 'app-cp-card',
   standalone: true,
   imports: [CommonModule, MaterialModule],
+  styleUrl: './cp-card.component.scss',
   template: `
-    <mat-card class="cp-card" appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>{{ title }}</mat-card-title>
-      </mat-card-header>
+    <mat-card class="cp-card">
       <img mat-card-image [src]="image" [alt]="alt" />
       <mat-card-content>
+        <mat-card-title>{{ title }}</mat-card-title>
         <p>
           {{ content }}
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button matButton (click)="actionEdit.emit()">Editar</button>
-        <button matButton (click)="actionDelete.emit()">Excluir</button>
+        <button mat-button (click)="actionEdit.emit()">Editar</button>
+        <button mat-button (click)="actionDelete.emit()">Excluir</button>
       </mat-card-actions>
     </mat-card>
   `,

@@ -5,6 +5,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   exports: [
@@ -14,6 +17,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatCardModule,
     MatToolbarModule,
     MatPaginatorModule,
+    MatFormFieldModule,
+    MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
   ],
 })
 export class MaterialModule {}

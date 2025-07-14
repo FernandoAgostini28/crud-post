@@ -1,0 +1,11 @@
+.headers {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 30px;
+
+  .headers-title {
+    margin: 0;
+  }
+}
