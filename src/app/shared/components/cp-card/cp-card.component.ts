@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
 
@@ -9,7 +9,7 @@ import { MaterialModule } from '../../material/material.module';
   styleUrl: './cp-card.component.scss',
   template: `
     <mat-card class="cp-card">
-      <img mat-card-image [src]="image" [alt]="alt" />
+      <img mat-card-image [src]="image" [alt]="alt || title" />
       <mat-card-content>
         <mat-card-title>{{ title }}</mat-card-title>
         <p>
@@ -17,8 +17,7 @@ import { MaterialModule } from '../../material/material.module';
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="actionEdit.emit()">Editar</button>
-        <button mat-button (click)="actionDelete.emit()">Excluir</button>
+        <ng-content></ng-content>
       </mat-card-actions>
     </mat-card>
   `,
@@ -28,8 +27,5 @@ export class CpCardComponent {
   @Input() content = '';
   @Input() image =
     'https://material.angular.dev/assets/img/examples/shiba2.jpg';
-  @Input() alt?: string = `Image card ${this.title}`;
-
-  @Output() actionEdit = new EventEmitter<void>();
-  @Output() actionDelete = new EventEmitter<void>();
+  @Input() alt?: string;
 }

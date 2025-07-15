@@ -4,9 +4,22 @@
       [title]="post.title"
       [content]="post.description"
       [image]="post.photo"
-      (actionDelete)="editPost.emit(post)"
-      (actionEdit)="deletePost.emit(post)"
-    ></app-cp-card>
+    >
+      <div class="actions">
+        <app-cp-button
+          text="Editar"
+          color="primary"
+          (buttonClick)="editPost.emit(post)"
+          iconName="edit"
+        ></app-cp-button>
+        <app-cp-button
+          text="Excluir"
+          color="warn"
+          (buttonClick)="deletePost.emit(post)"
+          iconName="delete"
+        ></app-cp-button>
+      </div>
+    </app-cp-card>
   </div>
 </div>
 <div

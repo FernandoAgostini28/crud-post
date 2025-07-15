@@ -1,7 +1,12 @@
+.form-group {
+  padding-top: 20px;
+}
+
 mat-form-field.full-width {
   width: 100%;
 }
 
 mat-dialog-content {
   min-width: 400px;
+  padding-top: 50px;
 }

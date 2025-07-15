@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Editar Post' : 'Novo Post' }}</h2>
 
 <mat-dialog-content [formGroup]="form">
+  <div class="form-group">
   <app-cp-form-field
     type="text"
     label="Título"
@@ -19,6 +20,7 @@
     formControlName="imageUrl"
     placeholder="https://exemplo.com/imagem.jpg"
   ></app-cp-form-field>
+  </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

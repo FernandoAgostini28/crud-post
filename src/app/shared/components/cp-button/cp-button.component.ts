@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
+import { ThemePalette } from '@angular/material/core';
+
+export type CpButtonVariant = 'basic' | 'raised' | 'flat' | 'stroked';
 
 @Component({
   selector: 'app-cp-button',
@@ -8,21 +11,57 @@ import { MaterialModule } from '../../material/material.module';
   imports: [CommonModule, MaterialModule],
   styleUrl: './cp-button.component.scss',
   template: `
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="onClick()"
-      [class.full-width]="full"
-    >
+    <ng-template #buttonContent>
       <mat-icon *ngIf="iconName">{{ iconName }}</mat-icon>
-      <span>{{ text }}</span>
-    </button>
+      <span *ngIf="text">{{ text }}</span>
+    </ng-template>
+
+    <ng-container [ngSwitch]="variant">
+      <button
+        *ngSwitchCase="'raised'"
+        mat-raised-button
+        [color]="color"
+        (click)="onClick()"
+        [class.full-width]="full"
+      >
+        <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+      </button>
+      <button
+        *ngSwitchCase="'flat'"
+        mat-flat-button
+        [color]="color"
+        (click)="onClick()"
+        [class.full-width]="full"
+      >
+        <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+      </button>
+      <button
+        *ngSwitchCase="'stroked'"
+        mat-stroked-button
+        [color]="color"
+        (click)="onClick()"
+        [class.full-width]="full"
+      >
+        <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+      </button>
+      <button
+        *ngSwitchDefault
+        mat-button
+        [color]="color"
+        (click)="onClick()"
+        [class.full-width]="full"
+      >
+        <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
+      </button>
+    </ng-container>
   `,
 })
 export class CpButtonComponent {
+  @Input() variant: CpButtonVariant = 'basic';
   @Input() text = '';
   @Input() iconName?: string;
   @Input() full = false;
+  @Input() color?: ThemePalette;
 
   @Output() buttonClick = new EventEmitter<void>();
 

@@ -7,6 +7,8 @@ import { CpButtonComponent } from '../../../../shared/components/cp-button/cp-bu
   imports: [CpButtonComponent],
   template: `
     <app-cp-button
+      [variant]="'raised'"
+      [color]="'primary'"
       [text]="'Adicionar Post'"
       [iconName]="'add'"
       (buttonClick)="onAddPostClick()"
