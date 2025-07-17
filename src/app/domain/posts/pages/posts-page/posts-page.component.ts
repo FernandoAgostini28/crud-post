@@ -34,16 +34,19 @@ export class PostsPageComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // TODO: Chamar o serviço para atualizar o post
-        this.refresh$.next();
+        this.postService.updatePost(result).subscribe(() => {
+          this.refresh$.next();
+        });
       }
     });
   }
 
-  onPostDelete(_post: Post): void {
-    console.log('Deletando post:', _post);
-    // TODO: Chamar o serviço para deletar o post e atualizar a lista.
-    this.refresh$.next();
+  onPostDelete(post: Post): void {
+    if (confirm(`Tem certeza que deseja excluir o post "${post.title}"?`)) {
+      this.postService.deletePost(post.id).subscribe(() => {
+        this.refresh$.next();
+      });
+    }
   }
 
   onAddPost(): void {
@@ -54,8 +57,10 @@ export class PostsPageComponent {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // TODO: Chamar o serviço para criar o post
-        this.refresh$.next();
+        const { ...newPost } = result;
+        this.postService.addPost(newPost).subscribe(() => {
+          this.refresh$.next();
+        });
       }
     });
   }

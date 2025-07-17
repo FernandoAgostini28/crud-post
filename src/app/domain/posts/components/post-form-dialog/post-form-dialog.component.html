@@ -1,36 +1,82 @@
 <h2 mat-dialog-title>{{ isEditMode ? 'Editar Post' : 'Novo Post' }}</h2>
 
-<mat-dialog-content [formGroup]="form">
-  <div class="form-group">
-  <app-cp-form-field
-    type="text"
-    label="Título"
-    formControlName="title"
-    placeholder="Título do post"
-  ></app-cp-form-field>
-  <app-cp-form-field
-    type="textarea"
-    label="Conteúdo"
-    formControlName="body"
-    placeholder="Escreva algo..."
-  ></app-cp-form-field>
-  <app-cp-form-field
-    type="text"
-    label="URL da Imagem"
-    formControlName="imageUrl"
-    placeholder="https://exemplo.com/imagem.jpg"
-  ></app-cp-form-field>
-  </div>
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <app-cp-form-field
+        type="text"
+        label="Título"
+        formControlName="title"
+        placeholder="Título do post"
+      ></app-cp-form-field>
+      <app-cp-form-field
+        type="textarea"
+        label="Conteúdo"
+        formControlName="description"
+        placeholder="Escreva algo..."
+      ></app-cp-form-field>
+
+      <div class="image-section">
+        <input
+          type="file"
+          #fileInput
+          hidden="true"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+        />
+
+        <app-cp-button
+          *ngIf="!imageChangedEvent && !croppedImage"
+          text="Selecionar Imagem"
+          (buttonClick)="fileInput.click()"
+        ></app-cp-button>
+
+        <div
+          *ngIf="(imageChangedEvent || imageBase64) && !croppedImage"
+          class="cropper-wrapper"
+        >
+          <app-cp-image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [imageBase64]="imageBase64"
+            (imageCropped)="onImageCropped($event)"
+          ></app-cp-image-cropper>
+          <div class="cropper-actions">
+            <app-cp-button
+              text="Descartar"
+              (buttonClick)="discardImage()"
+            ></app-cp-button>
+            <app-cp-button
+              text="Aplicar Recorte"
+              (buttonClick)="applyCrop()"
+            ></app-cp-button>
+          </div>
+        </div>
+
+        <div *ngIf="croppedImage" class="cropped-image-wrapper">
+          <p>Preview:</p>
+          <img [src]="croppedImage" alt="Imagem recortada" />
+          <div class="cropped-image-actions">
+            <app-cp-button
+              text="Alterar Recorte"
+              (buttonClick)="reCropImage()"
+            ></app-cp-button>
+            <app-cp-button
+              text="Descartar e Escolher Outra"
+              (buttonClick)="discardImage()"
+            ></app-cp-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-  <button mat-button (click)="onCancel()">Cancelar</button>
-  <button
-    mat-raised-button
+  <app-cp-button text="Cancelar" (buttonClick)="onCancel()"></app-cp-button>
+  <app-cp-button
+    [text]="isEditMode ? 'Salvar' : 'Criar'"
     color="primary"
-    (click)="onSave()"
+    (buttonClick)="onSave()"
     [disabled]="form.invalid"
-  >
-    {{ isEditMode ? 'Salvar' : 'Criar' }}
-  </button>
+  ></app-cp-button>
 </mat-dialog-actions>

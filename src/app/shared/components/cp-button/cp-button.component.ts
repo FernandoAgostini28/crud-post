@@ -23,6 +23,7 @@ export type CpButtonVariant = 'basic' | 'raised' | 'flat' | 'stroked';
         [color]="color"
         (click)="onClick()"
         [class.full-width]="full"
+        [disabled]="disabled"
       >
         <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
       </button>
@@ -32,6 +33,7 @@ export type CpButtonVariant = 'basic' | 'raised' | 'flat' | 'stroked';
         [color]="color"
         (click)="onClick()"
         [class.full-width]="full"
+        [disabled]="disabled"
       >
         <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
       </button>
@@ -41,6 +43,7 @@ export type CpButtonVariant = 'basic' | 'raised' | 'flat' | 'stroked';
         [color]="color"
         (click)="onClick()"
         [class.full-width]="full"
+        [disabled]="disabled"
       >
         <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
       </button>
@@ -50,6 +53,7 @@ export type CpButtonVariant = 'basic' | 'raised' | 'flat' | 'stroked';
         [color]="color"
         (click)="onClick()"
         [class.full-width]="full"
+        [disabled]="disabled"
       >
         <ng-container *ngTemplateOutlet="buttonContent"></ng-container>
       </button>
@@ -62,6 +66,7 @@ export class CpButtonComponent {
   @Input() iconName?: string;
   @Input() full = false;
   @Input() color?: ThemePalette;
+  @Input() disabled = false;
 
   @Output() buttonClick = new EventEmitter<void>();
 

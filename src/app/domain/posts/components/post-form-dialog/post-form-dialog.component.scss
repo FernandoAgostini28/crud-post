@@ -1,12 +1,43 @@
 .form-group {
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-mat-form-field.full-width {
+.image-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.cropper-wrapper {
   width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 4px;
 }
 
-mat-dialog-content {
-  min-width: 400px;
-  padding-top: 50px;
+.cropper-actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.cropped-image-wrapper {
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+}
+
+.cropped-image-actions {
+  margin-top: 8px;
 }
