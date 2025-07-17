@@ -38,6 +38,8 @@
           <app-cp-image-cropper
             [imageChangedEvent]="imageChangedEvent"
             [imageBase64]="imageBase64"
+            [aspectRatio]="3 / 2"
+            [resizeToWidth]="600"
             (imageCropped)="onImageCropped($event)"
           ></app-cp-image-cropper>
           <div class="cropper-actions">
