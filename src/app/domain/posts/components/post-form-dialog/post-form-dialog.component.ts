@@ -17,6 +17,7 @@ import { Post } from '../../models/posts-model';
 import { CpFormFieldComponent } from '../../../../shared/components/cp-form-field/cp-form-field.component';
 import { CpButtonComponent } from '../../../../shared/components/cp-button/cp-button.component';
 import { CommonModule } from '@angular/common';
+import { CpToastService } from '../../../../shared/components/cp-toast/cp-toast.service';
 
 @Component({
   selector: 'app-post-form-dialog',
@@ -36,6 +37,7 @@ export class PostFormDialogComponent {
   private fb = inject(FormBuilder);
   private dialogRef = inject(MatDialogRef<PostFormDialogComponent>);
   public data: { post?: Post } = inject(MAT_DIALOG_DATA);
+  private toastService = inject(CpToastService);
   form: FormGroup;
   isEditMode: boolean;
 
@@ -105,6 +107,9 @@ export class PostFormDialogComponent {
 
   onSave(): void {
     if (this.form.invalid) {
+      this.toastService.open(
+        'Por favor, preencha todos os campos obrigatórios.'
+      );
       return;
     }
 

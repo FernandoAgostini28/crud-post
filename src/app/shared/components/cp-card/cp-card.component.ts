@@ -5,14 +5,13 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material/material.module';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cp-card',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [MaterialModule],
   styleUrl: './cp-card.component.scss',
   template: `
     <mat-card class="cp-card">

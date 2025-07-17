@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { AddPostButtonComponent } from '../../components/add-post-button/add-post-button.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormDialogComponent } from '../../components/post-form-dialog/post-form-dialog.component';
+import { CpToastService } from '../../../../shared/components/cp-toast/cp-toast.service';
 
 @Component({
   selector: 'app-posts-page',
@@ -18,6 +19,7 @@ import { PostFormDialogComponent } from '../../components/post-form-dialog/post-
 export class PostsPageComponent {
   private postService = inject(PostService);
   private dialog = inject(MatDialog);
+  private toastService = inject(CpToastService);
   title = 'Posts';
 
   private refresh$ = new BehaviorSubject<void>(undefined);
@@ -36,17 +38,17 @@ export class PostsPageComponent {
       if (result) {
         this.postService.updatePost(result).subscribe(() => {
           this.refresh$.next();
+          this.toastService.open('Post atualizado com sucesso!');
         });
       }
     });
   }
 
   onPostDelete(post: Post): void {
-    if (confirm(`Tem certeza que deseja excluir o post "${post.title}"?`)) {
-      this.postService.deletePost(post.id).subscribe(() => {
-        this.refresh$.next();
-      });
-    }
+    this.postService.deletePost(post.id).subscribe(() => {
+      this.refresh$.next();
+      this.toastService.open('Post excluído com sucesso!');
+    });
   }
 
   onAddPost(): void {
@@ -60,6 +62,7 @@ export class PostsPageComponent {
         const { ...newPost } = result;
         this.postService.addPost(newPost).subscribe(() => {
           this.refresh$.next();
+          this.toastService.open('Post criado com sucesso!');
         });
       }
     });

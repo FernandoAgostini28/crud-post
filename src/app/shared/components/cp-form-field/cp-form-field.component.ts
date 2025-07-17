@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -21,7 +20,7 @@ import { MaterialModule } from '../../material/material.module';
 @Component({
   selector: 'app-cp-form-field',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [MaterialModule],
   styleUrl: './cp-form-field.component.scss',
   providers: [
     {
