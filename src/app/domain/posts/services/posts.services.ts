@@ -3,6 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Post } from '../models/posts-model';
 
+export interface PostsResponse {
+  posts: Post[];
+  totalCount: number;
+}
+
 @Injectable({
   providedIn: 'root',
 })

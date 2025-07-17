@@ -1,32 +1,64 @@
-import { Component, inject } from '@angular/core';
-import { PostsListCardsComponent } from '../../components/posts-list-cards/posts-list-cards.component';
+import { Component, inject, OnInit } from '@angular/core';
 import { Post } from '../../models/posts-model';
 import { PostService } from '../../services/posts.services';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { AddPostButtonComponent } from '../../components/add-post-button/add-post-button.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PostFormDialogComponent } from '../../components/post-form-dialog/post-form-dialog.component';
 import { CpToastService } from '../../../../shared/components/cp-toast/cp-toast.service';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { PostsListCardsComponent } from '../../components/posts-list-cards/posts-list-cards.component';
+import { BreakpointService } from '../../../../core/services/breakpoint.service';
 
 @Component({
   selector: 'app-posts-page',
   standalone: true,
-  imports: [PostsListCardsComponent, CommonModule, AddPostButtonComponent],
+  imports: [
+    CommonModule,
+    MatPaginatorModule,
+    PostsListCardsComponent,
+    AddPostButtonComponent,
+  ],
   templateUrl: './posts-page.component.html',
   styleUrl: './posts-page.component.scss',
 })
-export class PostsPageComponent {
+export class PostsPageComponent implements OnInit {
   private postService = inject(PostService);
   private dialog = inject(MatDialog);
   private toastService = inject(CpToastService);
+  private breakpointService = inject(BreakpointService);
+
   title = 'Posts';
 
-  private refresh$ = new BehaviorSubject<void>(undefined);
+  posts: Post[] = [];
+  pageSize = 6;
+  totalPosts = 0;
+  pageIndex = 0;
 
-  posts$: Observable<Post[]> = this.refresh$.pipe(
-    switchMap(() => this.postService.getPosts())
-  );
+  isHandset$: Observable<boolean>;
+  public loading = false;
+
+  constructor() {
+    this.isHandset$ = this.breakpointService.screenSize$.pipe(
+      map(({ isHandset }) => isHandset)
+    );
+  }
+
+  ngOnInit(): void {
+    this.loadPosts();
+  }
+
+  loadPosts(): void {
+    this.loading = true;
+    this.postService.getPosts().subscribe((allPosts: Post[]) => {
+      this.totalPosts = allPosts.length;
+      const startIndex = this.pageIndex * this.pageSize;
+      const endIndex = startIndex + this.pageSize;
+      this.posts = allPosts.slice(startIndex, endIndex);
+      this.loading = false;
+    });
+  }
 
   onPostEdit(post: Post): void {
     const dialogRef = this.dialog.open(PostFormDialogComponent, {
@@ -37,7 +69,7 @@ export class PostsPageComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.postService.updatePost(result).subscribe(() => {
-          this.refresh$.next();
+          this.loadPosts();
           this.toastService.open('Post atualizado com sucesso!');
         });
       }
@@ -46,7 +78,7 @@ export class PostsPageComponent {
 
   onPostDelete(post: Post): void {
     this.postService.deletePost(post.id).subscribe(() => {
-      this.refresh$.next();
+      this.loadPosts();
       this.toastService.open('Post excluído com sucesso!');
     });
   }
@@ -61,10 +93,16 @@ export class PostsPageComponent {
       if (result) {
         const { ...newPost } = result;
         this.postService.addPost(newPost).subscribe(() => {
-          this.refresh$.next();
+          this.loadPosts();
           this.toastService.open('Post criado com sucesso!');
         });
       }
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.loadPosts();
   }
 }

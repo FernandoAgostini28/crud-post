@@ -1,11 +1,25 @@
-<div class="container">
+<div class="container posts-page-content">
   <div class="headers">
     <h1 class="headers-title">{{ title }}</h1>
     <app-add-post-button (addPostClick)="onAddPost()"></app-add-post-button>
   </div>
-  <app-posts-list-cards
-    [posts]="posts$ | async"
-    (editPost)="onPostEdit($event)"
-    (deletePost)="onPostDelete($event)"
-  ></app-posts-list-cards>
+  <div class="paginator">
+    <mat-paginator
+      *ngIf="(isHandset$ | async) === false"
+      [length]="totalPosts"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="[6, 12, 18, 24]"
+      (page)="onPageChange($event)"
+      aria-label="Select page of posts"
+    >
+    </mat-paginator>
+  </div>
+  <div id="posts-scroll-container" class="posts-list">
+    <app-posts-list-cards
+      [posts]="posts"
+      (editPost)="onPostEdit($event)"
+      (deletePost)="onPostDelete($event)"
+    ></app-posts-list-cards>
+  </div>
 </div>
