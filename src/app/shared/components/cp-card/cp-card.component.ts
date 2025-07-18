@@ -1,36 +1,49 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  Component,
+  inject,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { MaterialModule } from '../../material/material.module';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cp-card',
   standalone: true,
-  imports: [CommonModule, MaterialModule],
+  imports: [MaterialModule],
+  styleUrl: './cp-card.component.scss',
   template: `
-    <mat-card class="cp-card" appearance="outlined">
-      <mat-card-header>
-        <mat-card-title>{{ title }}</mat-card-title>
-      </mat-card-header>
-      <img mat-card-image [src]="image" [alt]="alt" />
+    <mat-card class="cp-card">
+      <img mat-card-image [src]="safeImage" [alt]="alt || title" />
       <mat-card-content>
-        <p>
-          {{ content }}
-        </p>
+        <mat-card-title>{{ title }}</mat-card-title>
+        <p>{{ content }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button matButton (click)="actionEdit.emit()">Editar</button>
-        <button matButton (click)="actionDelete.emit()">Excluir</button>
+        <ng-content></ng-content>
       </mat-card-actions>
     </mat-card>
   `,
 })
-export class CpCardComponent {
+export class CpCardComponent implements OnChanges {
+  private sanitizer = inject(DomSanitizer);
+
   @Input() title = 'Shiba Inu';
   @Input() content = '';
   @Input() image =
     'https://material.angular.dev/assets/img/examples/shiba2.jpg';
-  @Input() alt?: string = `Image card ${this.title}`;
+  @Input() alt?: string;
 
-  @Output() actionEdit = new EventEmitter<void>();
-  @Output() actionDelete = new EventEmitter<void>();
+  safeImage: SafeUrl;
+
+  constructor() {
+    this.safeImage = this.sanitizer.bypassSecurityTrustUrl(this.image);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['image'] && this.image) {
+      this.safeImage = this.sanitizer.bypassSecurityTrustUrl(this.image);
+    }
+  }
 }

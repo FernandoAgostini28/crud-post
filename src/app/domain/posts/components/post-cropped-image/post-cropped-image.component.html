@@ -1,0 +1,24 @@
+<div class="container">
+  <div *ngIf="!isEditing">
+    <div *ngIf="currentImage" class="image-container">
+      <img [src]="currentImage" alt="Image preview" />
+      <button (click)="startEditing()" class="edit-button">
+        Alterar Imagem
+      </button>
+    </div>
+    <div *ngIf="!croppedImage">
+      <input type="file" (change)="onFileChangeEvent($event)" />
+    </div>
+  </div>
+
+  <div *ngIf="isEditing">
+    <app-cp-image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [imageBase64]="imageBase64"
+      [aspectRatio]="4 / 1"
+      [resizeToWidth]="256"
+      (imageCropped)="onImageCropped($event)"
+    ></app-cp-image-cropper>
+    <button (click)="cancelEditing()" class="cancel-button">Cancelar</button>
+  </div>
+</div>

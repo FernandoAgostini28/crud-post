@@ -1,0 +1,34 @@
+{
+  "posts": [
+    {
+      "id": "17072025001",
+      "title": "Waterfall Retreat",
+      "description": "One of the most peaceful and beautiful destinations in the region.",
+      "photo": "https://picsum.photos/id/1018/600/400"
+    },
+    {
+      "id": "17072025002",
+      "title": "Sunset at the Beach",
+      "description": "An unforgettable moment captured at the end of the day in Jericoacoara.",
+      "photo": "https://picsum.photos/id/1015/600/400"
+    },
+    {
+      "id": "17072025003",
+      "title": "Breakfast on the Balcony",
+      "description": "Start your day with a special breakfast and a relaxing view.",
+      "photo": "https://picsum.photos/id/1025/600/400"
+    },
+    {
+      "id": "17072025004",
+      "title": "Forest Trail",
+      "description": "A light walk among century-old trees and fresh air.",
+      "photo": "https://picsum.photos/id/1040/600/400"
+    },
+    {
+      "id": "17072025005",
+      "title": "Historic Town",
+      "description": "Well-preserved colonial architecture in the old center of Paraty.",
+      "photo": "https://picsum.photos/id/1031/600/400"
+    }
+  ]
+}

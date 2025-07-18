@@ -1,0 +1,35 @@
+@import '../../../../styles/breakpoints';
+
+:host {
+  .row {
+    display: grid;
+    margin: 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 24px;
+
+    @include media-breakpoint-up(sm) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include media-breakpoint-up(md) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .col {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+  }
+}

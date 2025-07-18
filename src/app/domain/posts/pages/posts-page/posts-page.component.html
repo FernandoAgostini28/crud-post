@@ -1,3 +1,51 @@
-<div class="container">
-  <h1>Página de Posts</h1>
+<div class="container posts-page-content">
+  <div class="headers">
+    <h1 class="headers-title">{{ title }}</h1>
+    <app-add-post-button (addPostClick)="onAddPost()"></app-add-post-button>
+  </div>
+
+  <ng-container *ngIf="(isHandset$ | async) === false">
+    <div class="paginator">
+      <mat-paginator
+        [length]="desktopTotalPosts"
+        [pageSize]="desktopPageSize"
+        [pageIndex]="desktopPageIndex"
+        [pageSizeOptions]="[6]"
+        (page)="onPageChange($event)"
+        aria-label="Select page of posts"
+      >
+      </mat-paginator>
+    </div>
+    <div class="posts-list">
+      <app-posts-list-cards
+        [posts]="desktopPosts"
+        (editPost)="onPostEdit($event)"
+        (deletePost)="onPostDelete($event)"
+      ></app-posts-list-cards>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="isHandset$ | async">
+    <div
+      id="posts-scroll-container"
+      class="posts-list mobile-scroll"
+      (scroll)="onScroll($event)"
+    >
+      <app-posts-list-cards
+        [posts]="mobilePosts"
+        (editPost)="onPostEdit($event)"
+        (deletePost)="onPostDelete($event)"
+      ></app-posts-list-cards>
+
+      <div *ngIf="loadingMore" class="loading-more">
+        Carregando mais posts...
+      </div>
+      <div
+        *ngIf="mobileLastPostId === 'final' && mobilePosts.length > 0"
+        class="no-more-posts"
+      >
+        Não há mais posts para carregar.
+      </div>
+    </div>
+  </ng-container>
 </div>

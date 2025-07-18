@@ -1,0 +1,15 @@
+<div class="cropper-container">
+  <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [imageBase64]="imageBase64"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="aspectRatio"
+    [resizeToWidth]="resizeToWidth"
+    format="png"
+    outputType="base64"
+    (imageCropped)="onImageCropped($event)"
+    (imageLoaded)="onImageLoaded($event)"
+    (cropperReady)="onCropperReady()"
+    (loadImageFailed)="onLoadImageFailed()"
+  ></image-cropper>
+</div>
