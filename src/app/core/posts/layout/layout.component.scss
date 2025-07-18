@@ -1,6 +1,7 @@
 :host {
   display: block;
   height: 100%;
+  overflow: hidden;
 }
 
 .app-layout {
@@ -11,5 +12,5 @@
 
 .app-main-content {
   flex-grow: 1;
-  overflow: auto;
+  overflow: hidden;
 }

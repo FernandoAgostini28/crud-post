@@ -22,10 +22,6 @@
     </app-cp-card>
   </div>
 </div>
-<div
-  *ngIf="!posts || posts.length === 0"
-  class="alert alert-info mt-3"
-  role="alert"
->
+<div *ngIf="posts?.length === 0" class="alert alert-info mt-3" role="alert">
   Nenhum post para exibir.
 </div>
